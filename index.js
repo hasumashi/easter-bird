@@ -20,6 +20,7 @@ const _bird = {
 	get over() { return this._over; },
 	set over(value) {
 		if (value) {
+			console.log('Game over')
 			clearInterval(_animation.obstacleInterval);
 			this.gameElement.classList.add('end');
 		}
@@ -31,6 +32,8 @@ const _bird = {
 	get score() { return this._score },
 	set score(x) {
 		document.querySelector('#score > span').textContent = x;
+		let allScore = +localStorage.getItem('score') || 0;
+		localStorage.setItem('score', allScore + 1)
 		this._score = x;
 	}
 };
@@ -77,12 +80,9 @@ function animate(timestamp) {
 function createObstacle() {
 	const obstacle = new Obstacle(_bird.gameElement, GAP_SIZE);
 	_obstacles.push(obstacle);
-	obstacle.onDestroy.then(() => {
-		console.log('remove')
-		_obstacles = _obstacles.filter(o => o !== obstacle);
-	});
-	console.log(_obstacles)
-
+	obstacle.onDestroy.then(() =>
+		_obstacles = _obstacles.filter(o => o !== obstacle)
+	);
 }
 
 
@@ -91,6 +91,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	_bird.gameElement = document.getElementById('game');
 	_bird.domElement = document.getElementById('bird');
 	console.log('DOMload', _bird)
+
+	if (localStorage.getItem('score') > 10) {
+		_bird.gameElement.classList.add('super');
+	}
 
 	_animation.obstacleInterval = setInterval(() => {
 		createObstacle();

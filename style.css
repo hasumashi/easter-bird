@@ -6,6 +6,8 @@ body {
 	/* background: #BADA55; */
 	background: #fafafa;
 	font-family: sans-serif;
+	height: 100%;
+	overflow: hidden;
 }
 
 #game {
@@ -39,6 +41,10 @@ body {
 	transition: transform 0.3s ease;;
 }
 
+#game.super #bird img {
+	background: #BADA55;
+}
+
 #game.end #bird img {
 	transform: rotate(90deg);
 }
@@ -54,6 +60,7 @@ body {
 	position: relative;
 	top: 20px;
 	left: 20px;
+	width: -moz-fit-content;
 	width: fit-content;
 	z-index: 999;
 	user-select: none;
@@ -112,4 +119,3 @@ body {
 	from { right: -60%; }
 	to   { right: 130%; }
 }
-
