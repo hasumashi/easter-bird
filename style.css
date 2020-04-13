@@ -82,11 +82,34 @@ body {
     color: #fff;
 	text-shadow: 0 1px 4px #0004;
 	opacity: 0;
-	transition: opacity 0.5s ease;
-	transition-delay: 1.4s;
+	transition: opacity 0.3s ease;
+	transition-delay: 1.7s;
 	z-index: 1;
 }
 
 #game.end .game-over {
 	opacity: 1;
 }
+
+.cloud {
+	position: absolute;
+	animation: float;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+.cloud-fg {
+	width: 40%;
+	animation-duration: 30s;
+
+}
+.cloud-bg {
+	width: 30%;
+	opacity: 0.8;
+	animation-duration: 40s;
+}
+
+@keyframes float {
+	from { right: -60%; }
+	to   { right: 130%; }
+}
+
