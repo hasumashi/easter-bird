@@ -1,0 +1,10 @@
+body {
+	background: #BADA55;
+}
+
+#game {
+	margin: auto;
+	margin-top: 20vh;
+	width: 480px;
+	height: 640px;
+}
