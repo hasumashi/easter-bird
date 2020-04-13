@@ -1,0 +1,28 @@
+.obstacle {
+	position: absolute;
+	right: 0;
+	/* right: 80px; */
+	width: 70px;
+	background: #773508;
+	border: 4px solid #0005;
+
+	animation: 4s moveRTL linear;
+
+	--gap-size: 100px;
+	max-height: (100% - var(--gap-size));
+}
+
+.obstacle.upper {
+	top: 0;
+	border-top: none;
+}
+
+.obstacle.lower {
+	bottom: 0;
+	border-bottom: none;
+}
+
+@keyframes moveRTL {
+	from { right: -70px; }
+	to   { right: 100%; }
+}

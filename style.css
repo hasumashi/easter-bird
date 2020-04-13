@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 body {
 	/* background: #BADA55; */
 	background: #fafafa;
@@ -6,8 +10,8 @@ body {
 
 #game {
 	box-shadow: 0 0 10px #0002;
-	background: rgba(0,212,255,1);
-	background: linear-gradient(0deg, rgba(0,212,255,1) 30%, rgba(0,164,246,1) 100%);
+	background: rgba(0, 212, 255, 1);
+	background: linear-gradient(0deg, rgba(0, 212, 255, 1) 30%, rgba(0, 164, 246, 1) 100%);
 	position: relative;
 	margin: auto;
 	top: 48%;
@@ -19,9 +23,9 @@ body {
 }
 
 #bird {
-	background: url('./assets/bird.png') no-repeat;
+	background: url("./assets/bird.png") no-repeat;
 	background-size: contain;
-	/* background-position: center; */
+	background-position: center;
 	--size: 50px;
 	width: var(--size);
 	height: var(--size);
@@ -29,21 +33,20 @@ body {
 	position: absolute;
 	left: calc(50% - var(--size) / 2);
 	top: 0;
-	/* top: 45%; */
 }
 
 #score {
-    background: #fff;
-    border: 3px solid #BADA55;
-    box-shadow: 0 0 0 3px #fff, 0 2px 10px #0009;
-    border-radius: 10px;
-    text-align: center;
-    padding: 4px;
-    font-size: 25px;
-    position: relative;
+	background: #fff;
+	border: 3px solid #bada55;
+	box-shadow: 0 0 0 3px #fff, 0 2px 10px #0009;
+	border-radius: 10px;
+	text-align: center;
+	padding: 4px 10px;
+	font-size: 25px;
+	position: relative;
 	top: 20px;
 	left: 20px;
-    width: 50px;
+	width: fit-content;
 	z-index: 999;
 	user-select: none;
 }
@@ -51,25 +54,5 @@ body {
 #score img {
 	height: 0.8em;
 	vertical-align: baseline;
+	user-select: none;
 }
-
-.obstacle {
-	position: absolute;
-	right: 80px;
-	width: 70px;
-	background: #773508;
-	border: 4px solid #0005;
-}
-
-.obstacle.upper {
-	top: 0;
-	height: calc(40% - 70px);
-	border-top: none;
-}
-
-.obstacle.lower {
-	bottom: 0;
-	height: calc(60% - 70px);
-	border-bottom: none;
-}
-
