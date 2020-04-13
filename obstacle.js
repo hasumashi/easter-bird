@@ -28,8 +28,6 @@ export default class Obstacle {
 		const gapPosition = Math.random() * 100; // %
 		upper.style.height = `calc(${gapPosition}% - ${this.gapSize}px)`;
 		lower.style.height = `calc(${100 - gapPosition}% - ${this.gapSize}px)`;
-		console.log(`calc(${gapPosition}% - ${this.gapSize}px)`)
-		console.log(upper.style.height)
 		
 		this.gameElement.appendChild(upper);
 		this.gameElement.appendChild(lower);
@@ -42,6 +40,17 @@ export default class Obstacle {
 	}
 
 	checkCollision(bird) {
+		const birdBox = bird.domElement.getBoundingClientRect();
+		const upperBox = this.upper.getBoundingClientRect();
+		const lowerBox = this.lower.getBoundingClientRect();
 
+		const collides = (a, b) => (
+			((a.top + a.height) > (b.top)) &&
+			(a.top < (b.top + b.height)) &&
+			((a.left + a.width) > b.left) &&
+			(a.left < (b.left + b.width))
+		);
+
+		return collides(birdBox, upperBox) || collides(bird, lowerBox);
 	}
 }

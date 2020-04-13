@@ -16,39 +16,72 @@ const _bird = {
 	velocity: 0,
 	position: 0,
 
+	_over: false,
+	get over() { return this._over; },
+	set over(value) {
+		if (value)
+			document.querySelector('#bird img').className = 'dead';
+		this._over = value;
+	},
+	
+	_score: 0,
+	get score() { return this._score },
+	set score(x) {
+		document.querySelector('#score > span').textContent = x;
+		this._score = x;
+	}
 };
+
+let _obstacles = [];
 
 const _animation = {
 	handler: null,
 	lastTimestamp: 0,
+	obstacleInterval: null,
 };
-
-const _obstacles = [];
 
 
 function jump() {
-	_bird.velocity = -JUMP_VELOCITY;
+	if (!_bird.over) {
+		_bird.velocity = -JUMP_VELOCITY;
+	}
 }
 
 function animate(timestamp) {	
 	const timeDelta = timestamp - _animation.lastTimestamp;
 	const moveFactor = (timeDelta / 16); // requestanimationframe is 60 FPS (16ms)
 
+	// movement
 	_bird.position += _bird.velocity * moveFactor;
 	_bird.velocity += GRTAVITY;
 	_bird.domElement.style.transform = `translateY(${_bird.position}px)`;
 
+	// collision
+	const collides = _obstacles.some(obstacle => obstacle.checkCollision(_bird));
+	if (collides) {
+		clearInterval(_animation.obstacleInterval);
+		_bird.over = true;
+		// return false;
+	}
+	
+	if (_bird.position > HEIGHT) {
+		_bird.over = true;
+		return false;
+	}
+
 	_animation.lastTimestamp = timestamp;
-	if (_bird.position <= HEIGHT)
-		_animation.handler = requestAnimationFrame(animate);
+	_animation.handler = requestAnimationFrame(animate);
 }
 
 function createObstacle() {
 	const obstacle = new Obstacle(_bird.gameElement, GAP_SIZE);
 	_obstacles.push(obstacle);
 	obstacle.onDestroy.then(() => {
-		_obstacles.filter(o => o !== obstacle);
+		console.log('remove')
+		_obstacles = _obstacles.filter(o => o !== obstacle);
 	});
+	console.log(_obstacles)
+
 }
 
 
@@ -58,9 +91,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	_bird.domElement = document.getElementById('bird');
 	console.log('DOMload', _bird)
 
-	const obstacleInterval = setInterval(() => {
+	_animation.obstacleInterval = setInterval(() => {
 		createObstacle();
 	}, OBSTACLE_DELAY);
+
+	setTimeout(() => {
+		setInterval(() => {
+			if (!_bird.over)
+				_bird.score += 1;
+		}, OBSTACLE_DELAY)
+	}, OBSTACLE_DELAY / 2);
 
 	document.addEventListener('keydown', (event) => {
 		if (event.repeat)
