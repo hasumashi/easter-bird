@@ -19,8 +19,11 @@ const _bird = {
 	_over: false,
 	get over() { return this._over; },
 	set over(value) {
-		if (value)
-			document.querySelector('#bird img').className = 'dead';
+		if (value) {
+			clearInterval(_animation.obstacleInterval);
+			this.gameElement.classList.add('end');
+		}
+		
 		this._over = value;
 	},
 	
@@ -59,9 +62,7 @@ function animate(timestamp) {
 	// collision
 	const collides = _obstacles.some(obstacle => obstacle.checkCollision(_bird));
 	if (collides) {
-		clearInterval(_animation.obstacleInterval);
 		_bird.over = true;
-		// return false;
 	}
 	
 	if (_bird.position > HEIGHT) {

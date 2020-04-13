@@ -39,7 +39,7 @@ body {
 	transition: transform 0.3s ease;;
 }
 
-#bird img.dead {
+#game.end #bird img {
 	transform: rotate(90deg);
 }
 
@@ -57,10 +57,36 @@ body {
 	width: fit-content;
 	z-index: 999;
 	user-select: none;
+	transition: all 0.5s ease;
+	transition-delay: 1.4s;
 }
 
 #score img {
 	height: 0.8em;
 	vertical-align: baseline;
 	user-select: none;
+}
+
+#game.end #score {
+	top: 50%;
+	left: 50%;
+	transform: scale(1.5) translate(-35%, 0);
+}
+
+#game .game-over {
+	position: absolute;
+    top: 33%;
+    text-align: center;
+    width: 100%;
+    font-size: 45px;
+    color: #fff;
+	text-shadow: 0 1px 4px #0004;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+	transition-delay: 1.4s;
+	z-index: 1;
+}
+
+#game.end .game-over {
+	opacity: 1;
 }

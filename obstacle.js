@@ -51,6 +51,6 @@ export default class Obstacle {
 			(a.left < (b.left + b.width))
 		);
 
-		return collides(birdBox, upperBox) || collides(bird, lowerBox);
+		return collides(birdBox, upperBox) || collides(birdBox, lowerBox);
 	}
 }
